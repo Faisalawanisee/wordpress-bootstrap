@@ -27,7 +27,7 @@
 					
 					</article> <!-- end article -->
 					
-					<?php comments_template('',true); ?>
+					<?php //comments_template('',true); no debe haber comentarios en las páginas?>
 					
 					<?php endwhile; ?>		
 					
@@ -48,7 +48,7 @@
 			
 				</div> <!-- end #main -->
     
-				<?php get_sidebar(); // sidebar 1 ?>
+				<?php get_sidebar('sidebar1'); // obtenemos sidebar 1 ?>
     
 			</div> <!-- end #content -->
 

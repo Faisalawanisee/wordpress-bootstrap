@@ -19,7 +19,8 @@
 						</header> <!-- end article header -->
 					
 						<section class="post_content clearfix">
-							<?php the_content( __("Read more &raquo;","wpbootstrap") ); ?>
+						<?php //aquí se debe mostrar el excerpt, en el original se muestra todo el contenido ?>
+						<?php the_excerpt();//the_content( __("Read more &raquo;","wpbootstrap") ); ?>
 						</section> <!-- end article section -->
 						
 						<footer>

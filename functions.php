@@ -160,26 +160,35 @@ you like. Enjoy!
 
 // Sidebars & Widgetizes Areas
 function wp_bootstrap_register_sidebars() {
-  register_sidebar(array(
-  	'id' => 'sidebar1',
-  	'name' => 'Main Sidebar',
-  	'description' => 'Used on every page BUT the homepage page template.',
-  	'before_widget' => '<div id="%1$s" class="widget %2$s">',
-  	'after_widget' => '</div>',
-  	'before_title' => '<h4 class="widgettitle">',
-  	'after_title' => '</h4>',
+     register_sidebar(array(
+    'id' => 'sidebarblog',
+    'name' => 'Barra lateral del blog',
+    'description' => 'Visible en las entradas del blog',
+    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<h4 class="widgettitle">',
+    'after_title' => '</h4>',
   ));
-    
-  register_sidebar(array(
-  	'id' => 'sidebar2',
-  	'name' => 'Homepage Sidebar',
-  	'description' => 'Used only on the homepage page template.',
-  	'before_widget' => '<div id="%1$s" class="widget %2$s">',
-  	'after_widget' => '</div>',
-  	'before_title' => '<h4 class="widgettitle">',
-  	'after_title' => '</h4>',
+    register_sidebar(array(
+    'id' => 'sidebar1',
+    'name' => 'Barra lateral de páginas',
+    'description' => 'Visible en las páginas internas',
+    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<h4 class="widgettitle">',
+    'after_title' => '</h4>',
   ));
-    
+  
+  register_sidebar(array(
+  'id' => 'header',
+  'name' => 'Encabezado',
+  'description' => 'Visible en el encabezado a la derecha',
+  'before_widget' => '<div id="%1$s" class="widget %2$s">',
+  'after_widget' => '</div>',
+  'before_title' => '',
+  'after_title' => '',
+  ));
+
   register_sidebar(array(
     'id' => 'footer1',
     'name' => 'Footer 1',
@@ -206,7 +215,8 @@ function wp_bootstrap_register_sidebars() {
     'before_title' => '<h4 class="widgettitle">',
     'after_title' => '</h4>',
   ));
-    
+
+
     
   /* 
   to add more sidebars or widgetized areas, just copy
@@ -345,26 +355,26 @@ function wp_bootstrap_remove_thumbnail_dimensions( $html ) {
 }
 
 // Add the Meta Box to the homepage template
-function wp_bootstrap_add_homepage_meta_box() {  
-	global $post;
-
-	// Only add homepage meta box if template being used is the homepage template
-	// $post_id = isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : "");
-	$post_id = $post->ID;
-	$template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
-
-	if ( $template_file == 'page-homepage.php' ){
-	    add_meta_box(  
-	        'homepage_meta_box', // $id  
-	        'Optional Homepage Tagline', // $title  
-	        'wp_bootstrap_show_homepage_meta_box', // $callback  
-	        'page', // $page  
-	        'normal', // $context  
-	        'high'); // $priority  
-    }
-}
-
-add_action( 'add_meta_boxes', 'wp_bootstrap_add_homepage_meta_box' );
+//function wp_bootstrap_add_homepage_meta_box() {  
+//	global $post;
+//
+//	// Only add homepage meta box if template being used is the homepage template
+//	// $post_id = isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : "");
+//	$post_id = $post->ID;
+//	$template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
+//
+//	if ( $template_file == 'page-homepage.php' ){
+//	    add_meta_box(  
+//	        'homepage_meta_box', // $id  
+//	        'Optional Homepage Tagline', // $title  
+//	        'wp_bootstrap_show_homepage_meta_box', // $callback  
+//	        'page', // $page  
+//	        'normal', // $context  
+//	        'high'); // $priority  
+//    }
+//}
+//Esta metabox no tiene utilidad
+//add_action( 'add_meta_boxes', 'wp_bootstrap_add_homepage_meta_box' );
 
 // Field Array  
 $prefix = 'custom_';  
@@ -707,4 +717,14 @@ function wp_bootstrap_filter_ptags_on_images( $content ){
 }
 add_filter( 'the_content', 'wp_bootstrap_filter_ptags_on_images' );
 
-?>
+// funciones extra para plugins, etc
+
+//visual composer quitar botón para frontend
+vc_disable_frontend();
+function vc_remove_wp_admin_bar_button() {remove_action('admin_bar_menu', array(vc_frontend_editor(), 'adminBarEditLink'), 1000);}
+add_action('vc_after_init', 'vc_remove_wp_admin_bar_button');
+function vc_remove_frontend_links() {  vc_disable_frontend(); }
+add_action('vc_after_init', 'vc_remove_frontend_links');
+//Force Visual Composer to initialize as "built into the theme". This will hide certain tabs under the Settings->Visual Composer page
+add_action('vc_before_init', 'sinetiks_vcSetAsTheme');
+function sinetiks_vcSetAsTheme() {vc_set_as_theme($disable_updater = true);}

@@ -12,6 +12,7 @@
 		<title><?php wp_title( '|', true, 'right' ); ?></title>	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
   		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+  		<link rel="shortcut icon" type="image/x-icon" href="<?=bloginfo('template_url')?>/images/favicon.ico">
 
 		<!-- wordpress head functions -->
 		<?php wp_head(); ?>
